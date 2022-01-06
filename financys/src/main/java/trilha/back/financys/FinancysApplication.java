@@ -6,29 +6,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FinancysApplication {
 	public static void main(String[] args) {
-		Categoria categoria = new Categoria(0L,"Novo","Sem descrição");
-		System.out.println(categoria.toString());
+		SpringApplication.run(FinancysApplication.class,args);
 
-		Categoria categoria2 = new Categoria();
-		categoria2.setId(4L);
-		categoria2.setName("Salário");
-		categoria2.setDescription("Recebimento de Salário");
+		Categoria categoria1 = new Categoria(1L,"Férias","Recebimento das férias");
+		System.out.println(categoria1.toString());
+		Categoria categoria2 = new Categoria(4L,"Salário","Recebimento de Salário");
 		System.out.println(categoria2.toString());
 
 		System.out.println("#############################################");
 
-		Lancamento lancamento = new Lancamento(00L, "Novo", "Sem desc", "revenue","5000,00","01/01/2021",false,0L);
-		System.out.println(lancamento.toString());
-
-		Lancamento lancamento2 = new Lancamento();
-		lancamento2.setId(3L);
-		lancamento2.setName("Salário");
-		lancamento2.setDescription("Adiantamento Quinzenal");
-		lancamento2.setType("revenue");
-		lancamento2.setAmount("4405,49");
-		lancamento2.setDate("15/09/2021");
-		lancamento2.setPaid(true);
-		lancamento2.setCategoryId(categoria.getId());
+		Lancamento lancamento1 = new Lancamento(2L, "13º", "Adiantamento 13º", "revenue","5000,00","31/12/2021",false,0L);
+		System.out.println(lancamento1.toString());
+		Lancamento lancamento2 = new Lancamento(3L, "Salário", "Adiantamento Quinzenal", "revenue","4405,49","15/09/2021",true,categoria1.getId());
 		System.out.println(lancamento2.toString());
 	}
 }
