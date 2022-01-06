@@ -1,5 +1,6 @@
 package trilha.back.financys;
 
+
 public class Categoria {
     private Long id;
     private String name;
