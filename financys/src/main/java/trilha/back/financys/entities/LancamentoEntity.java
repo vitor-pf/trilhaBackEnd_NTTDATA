@@ -1,5 +1,4 @@
 package trilha.back.financys.entities;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,11 +8,11 @@ public class LancamentoEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
     @Column(nullable = false)
-    protected String name;
+    private String name;
     @Column(nullable = false)
-    protected String description;
+    private String description;
     @Column(nullable = false)
     private String type;
     @Column(nullable = false)
@@ -24,20 +23,20 @@ public class LancamentoEntity implements Serializable {
     private boolean paid;
 
     @ManyToOne
-    private CategoriaEntity categoryId;
+    private CategoriaEntity category;
 
     //Construtor Vazio
     public LancamentoEntity() { }
     //Construtor Completo
     public LancamentoEntity(String name, String description, String type,
-                            String amount, String date, boolean paid, CategoriaEntity categoryId) {
-        setName(name);
-        setDescription(description);
+                            String amount, String date, boolean paid, CategoriaEntity category) {
+        this.name = name;
+        this.description = description;
         this.type = type;
         this.amount = amount;
         this.date = date;
         this.paid = paid;
-        this.categoryId = categoryId;
+        this.category = category;
     }
 
     public Long getId() {
@@ -82,12 +81,13 @@ public class LancamentoEntity implements Serializable {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
-    public CategoriaEntity getCategoryId() {
-        return categoryId;
+    public CategoriaEntity getCategory() {
+        return category;
     }
-    public void setCategoryId(CategoriaEntity categoryId){
-        this.categoryId = categoryId;
+    public void setCategory(CategoriaEntity category) {
+        this.category = category;
     }
+
     @Override
     public String toString(){
         return "Id: "+getId()
@@ -97,6 +97,6 @@ public class LancamentoEntity implements Serializable {
                 +",\nAmount: "+getAmount()
                 +",\nDate: "+getDate()
                 + ",\nPaid: "+getPaid()
-                +",\nCategoryId: "+getCategoryId();
+                +",\nCategoryId: "+getCategory();
     }
 }

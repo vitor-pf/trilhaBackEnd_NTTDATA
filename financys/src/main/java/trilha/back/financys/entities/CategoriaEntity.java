@@ -1,5 +1,7 @@
 package trilha.back.financys.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -7,22 +9,20 @@ import java.util.List;
 @Entity
 @Table(name = "categoria")
 public class CategoriaEntity implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
     @Column(nullable = false)
-    protected String name;
+    private String name;
     @Column(nullable = false)
-    protected String description;
+    private String description;
 
-    //Construtor Vazio
+    @OneToMany(mappedBy = "category")
+    private List<LancamentoEntity> lancamentoEntity;
+
     public CategoriaEntity() { }
-    //Construtor Completo
-    public CategoriaEntity(Long id, String name, String description) {
-        this.id = id;
+    public CategoriaEntity(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -45,17 +45,13 @@ public class CategoriaEntity implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @OneToMany(mappedBy = "categoryId", orphanRemoval = true, cascade = CascadeType.ALL)
-    //@OneToMany
-    private List<LancamentoEntity> lancamentoEntity;
+    @JsonIgnore
     public List<LancamentoEntity> getLancamento() {
         return lancamentoEntity;
     }
     public void setLancamento(List<LancamentoEntity> lancamentoEntity) {
         this.lancamentoEntity = lancamentoEntity;
     }
-
     @Override
     public String toString(){
         return "Id: "+getId()

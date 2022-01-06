@@ -1,4 +1,4 @@
-package trilha.back.financys.configs;
+package trilha.back.financys.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
