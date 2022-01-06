@@ -9,7 +9,6 @@ import java.util.ArrayList;
 @Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
 
-    ArrayList<CategoriaEntity> findByName(String name);
-
+    ArrayList<CategoriaEntity> findByNameCategoria(String nameCategoria);
 }
 

@@ -125,6 +125,7 @@ D: Delete - apagar um registro.
 
 Também é possível criar uma exclusão reversível, onde a informação não é deletada, mas sim, criado de segurança uma cópia ou mudado seu status.
 
+
 ## DESAFIO 5
 #### Defina  com  suas  palavras  qual  é  a  responsabilidade  das  camadas  vistas  até  agora, entity, controller, repository e service.
 O MVC (model, view e controller), é um padrão desenvolvimento de software.
@@ -137,3 +138,11 @@ A *model (Entety)* se concentrar todas as entidades ou tabelas do negócio, é p
 
 O *Repository* é a última camada ao banco de dados, é sendo responsável pelo CRUD ( create, read, update e delete), ou seja, somente ele pode executar as operações do banco de dados.
 
+
+# DESAFIO 6
+#### O que significa DTO, e qual sua importância? 
+O DTO (Data Transfer Object), o principal objetivo do padrão é reduzir viagens de ida e volta ao servidor, ele é usado para transferir dados entre subsistemas de uma aplicação em forma de objeto.
+
+O dto contém vários benefícios entre eles:
+Reduz a sobrecarga na rede, já o encapsulamento traduz a estrutura do objeto e os dados para um formato específico e muito mais.
+O dto é a principal porta de entrada e saída de dados, sendo possível controlar rigorosamente todo o fluxo na aplicação. Ou seja, uma simples classe, mas muito importante na questão performance e segurança.

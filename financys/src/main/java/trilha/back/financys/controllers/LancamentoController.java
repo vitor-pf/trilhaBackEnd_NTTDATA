@@ -1,15 +1,19 @@
 package trilha.back.financys.controllers;
 
-import org.springframework.beans.BeanUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import trilha.back.financys.dtos.LancamentoDTO;
 import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.services.LancamentoService;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/lancamentos", produces="application/json")
 @CrossOrigin(origins = "*")
@@ -17,37 +21,30 @@ public class LancamentoController {
     @Autowired
     private LancamentoService lancamentoService;
 
+    @GetMapping("/grafico")
+    public ResponseEntity<?> grafico() {
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
+    }
     @PostMapping("/save")
-    public ResponseEntity<LancamentoEntity> lancamentoSalva(@RequestBody LancamentoEntity body) {
-        boolean statusCategoria = lancamentoService.validateCategoryById(body.getCategory().getId());
-        if(statusCategoria == true) {
-            lancamentoService.save(body);
-            return ResponseEntity.status(HttpStatus.CREATED).body(body);
-        }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+    public ResponseEntity<LancamentoDTO> create(@RequestBody @Valid LancamentoEntity body,
+                                                BindingResult result) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoService.create(body,result));
     }
     @GetMapping("/findAll")
-    public ResponseEntity<List<LancamentoEntity>> lancamentoLista() {
-        List<LancamentoEntity> lancamentoEntity = lancamentoService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(lancamentoEntity);
+    public ResponseEntity<List<LancamentoDTO>> readAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.readAll());
     }
     @GetMapping("/findById/{id}")
-    public ResponseEntity<LancamentoEntity> lancamentoUnica(@PathVariable Long id) {
-        LancamentoEntity lancamentoEntity = lancamentoService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(lancamentoEntity);
+    public ResponseEntity<LancamentoDTO> readById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.readById(id));
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<LancamentoEntity> lancamentoAlterar(@PathVariable Long id, @RequestBody LancamentoEntity body){
-        LancamentoEntity aux = lancamentoService.findById(id);
-        BeanUtils.copyProperties(body,aux,"id");
-        lancamentoService.save(aux);
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+    public ResponseEntity<LancamentoDTO> update(@PathVariable Long id, @RequestBody @Valid LancamentoEntity body){
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.update(id, body));
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> lancamentoDeletar(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         lancamentoService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
