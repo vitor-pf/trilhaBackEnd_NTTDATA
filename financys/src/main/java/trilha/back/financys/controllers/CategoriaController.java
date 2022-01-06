@@ -1,46 +1,50 @@
 package trilha.back.financys.controllers;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.entities.CategoriaEntity;
-import trilha.back.financys.repositories.CategoriaRepository;
-import java.util.List;
-import java.util.Optional;
+import trilha.back.financys.services.CategoriaService;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping(value = "/v1/categorias", produces="application/json")
 @CrossOrigin(origins = "*")
 public class CategoriaController {
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoriaService categoriaService;
 
     @PostMapping("/save")
     public ResponseEntity<CategoriaEntity> categoriaSalva(@RequestBody CategoriaEntity body) {
-
-        categoriaRepository.save(body);
-        return ResponseEntity.ok(body);
+        if(categoriaService.idCategoryByName(body.getName()) == 0){
+            categoriaService.save(body);
+            return ResponseEntity.status(HttpStatus.CREATED).body(body);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/findAll")
     public ResponseEntity<List<CategoriaEntity>> categoriaLista() {
-        return ResponseEntity.ok(categoriaRepository.findAll());
+        List categoria = categoriaService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(categoria);
     }
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<CategoriaEntity>> categoriaUnica(@PathVariable Long id) {
-        return ResponseEntity.ok(categoriaRepository.findById(id));
+    public ResponseEntity<CategoriaEntity> categoriaUnica(@PathVariable Long id) {
+        CategoriaEntity categoriaEntity = categoriaService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaEntity);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<CategoriaEntity> categoriaAlterar(@PathVariable Long id, @RequestBody CategoriaEntity body){
-        var aux = categoriaRepository.findById(id).get();
+        CategoriaEntity aux = categoriaService.findById(id);
         BeanUtils.copyProperties(body,aux,"id");
-        categoriaRepository.save(aux);
-        return ResponseEntity.ok(body);
+        categoriaService.save(aux);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> categoriaDeletar(@PathVariable Long id){
-        categoriaRepository.deleteById(id);
-        return new ResponseEntity<> (HttpStatus.OK);
+        categoriaService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
