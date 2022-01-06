@@ -1,23 +1,40 @@
 package trilha.back.financys;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import trilha.back.financys.repositories.CategoriaRepository;
+import trilha.back.financys.repositories.LancamentoRepository;
 
 @SpringBootApplication
-public class FinancysApplication {
+public class FinancysApplication implements CommandLineRunner {
+	@Autowired
+	private CategoriaRepository categoriaRepository = null;
+	@Autowired
+	private LancamentoRepository lancamentoRepository = null;
+
 	public static void main(String[] args) {
-		SpringApplication.run(FinancysApplication.class,args);
+		SpringApplication.run(FinancysApplication.class, args);
+	}
 
-		Categoria categoria1 = new Categoria(1L,"Férias","Recebimento das férias");
-		System.out.println(categoria1.toString());
-		Categoria categoria2 = new Categoria(4L,"Salário","Recebimento de Salário");
-		System.out.println(categoria2.toString());
+	@Override
+	public void run(String... args) throws Exception {
+		/*
+		Categoria categoria1 = new Categoria("Férias","Recebimento das férias");
+		Categoria categoria2 = new Categoria("Salário","Recebimento de Salário");
+		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2));
+		System.out.println(categoriaRepository.findAll());
 
-		System.out.println("#############################################");
+		System.out.println("############################################################");
 
-		Lancamento lancamento1 = new Lancamento(2L, "13º", "Adiantamento 13º", "revenue","5000,00","31/12/2021",false,0L);
-		System.out.println(lancamento1.toString());
-		Lancamento lancamento2 = new Lancamento(3L, "Salário", "Adiantamento Quinzenal", "revenue","4405,49","15/09/2021",true,categoria1.getId());
-		System.out.println(lancamento2.toString());
+		Lancamento lancamento1 = new Lancamento("Férias", "Recebimento das férias",
+				"revenue","6000,00","31/12/2021",true, 1L);
+		Lancamento lancamento2 = new Lancamento("Salário", "Recebimento de Salário",
+				"revenue","5000,00","20/01/2022",false, 2L);
+		lancamentoRepository.saveAll(Arrays.asList(lancamento1,lancamento2));
+		System.out.println(lancamentoRepository.findAll());
+
+*/
 	}
 }

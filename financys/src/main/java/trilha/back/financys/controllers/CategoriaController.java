@@ -1,35 +1,46 @@
 package trilha.back.financys.controllers;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import trilha.back.financys.Categoria;
-import java.util.ArrayList;
+import trilha.back.financys.entities.CategoriaEntity;
+import trilha.back.financys.repositories.CategoriaRepository;
 import java.util.List;
+import java.util.Optional;
 
-
-@RestController
-@ResponseBody
-@RequestMapping(value = "/categoria")
-@Api(value = "FinancysApplication")
-@CrossOrigin(origins = "*") //Liberar qualquer dominio para acessar *libera todos
+@Controller
+@RequestMapping(value = "/v1/categorias", produces="application/json")
+@CrossOrigin(origins = "*")
 public class CategoriaController {
-    private ArrayList<Categoria> lista = new ArrayList<Categoria>();
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
+    @PostMapping("/save")
+    public ResponseEntity<CategoriaEntity> categoriaSalva(@RequestBody CategoriaEntity body) {
 
-    @GetMapping("/ler") //categoria
-    @ApiOperation(value = "Retorna todas categorias")
-    public ResponseEntity<List<Categoria>> categoriaLista() {
-        return ResponseEntity.ok(lista);
+        categoriaRepository.save(body);
+        return ResponseEntity.ok(body);
     }
-    @PostMapping("/criar") //categoria
-    @ApiOperation(value = "Cria uma categoria")
-    public ResponseEntity<Categoria> categoriaSalva(@RequestBody Categoria categoriaBody) {
-        var categoria = new Categoria();
-        categoria.setId(categoriaBody.getId());
-        categoria.setName(categoriaBody.getName());
-        categoria.setDescription(categoriaBody.getDescription());
-        lista.add(categoria);
-        return ResponseEntity.ok(categoria);
+    @GetMapping("/findAll")
+    public ResponseEntity<List<CategoriaEntity>> categoriaLista() {
+        return ResponseEntity.ok(categoriaRepository.findAll());
+    }
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Optional<CategoriaEntity>> categoriaUnica(@PathVariable Long id) {
+        return ResponseEntity.ok(categoriaRepository.findById(id));
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CategoriaEntity> categoriaAlterar(@PathVariable Long id, @RequestBody CategoriaEntity body){
+        var aux = categoriaRepository.findById(id).get();
+        BeanUtils.copyProperties(body,aux,"id");
+        categoriaRepository.save(aux);
+        return ResponseEntity.ok(body);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> categoriaDeletar(@PathVariable Long id){
+        categoriaRepository.deleteById(id);
+        return new ResponseEntity<> (HttpStatus.OK);
     }
 }
