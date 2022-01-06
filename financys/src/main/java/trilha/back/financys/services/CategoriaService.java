@@ -5,12 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import trilha.back.financys.dtos.CategoriaDTO;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,19 +23,9 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
         this.modelMapper = modelMapper;
     }
-    public long idCategoryByName(String nameCategory) {
-        ArrayList<CategoriaEntity> result = categoriaRepository.findByNameCategoria(nameCategory);
-        return result.isEmpty() ? -1 : result.get(0).getId();
-    }
 
-
-
-
-    public CategoriaDTO create(CategoriaEntity body, BindingResult result){
-        if(idCategoryByName(body.getNameCategoria()) < 0 && (!result.hasErrors())){
-            return maptoEntity(categoriaRepository.save(body));
-        }
-        return null;
+    public CategoriaDTO create(CategoriaEntity body){
+        return maptoEntity(categoriaRepository.save(body));
     }
 
     public List<CategoriaDTO> readAll(){
@@ -58,7 +46,6 @@ public class CategoriaService {
     public void delete(long id){
         categoriaRepository.deleteById(id);
     }
-
 
     private CategoriaEntity mapToDto(CategoriaDTO dto) {
         return modelMapper.map(dto, CategoriaEntity.class);

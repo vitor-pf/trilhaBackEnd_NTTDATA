@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.dtos.LancamentoDTO;
 import trilha.back.financys.entities.LancamentoEntity;
@@ -26,9 +25,8 @@ public class LancamentoController {
         return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
     }
     @PostMapping("/save")
-    public ResponseEntity<LancamentoDTO> create(@RequestBody @Valid LancamentoEntity body,
-                                                BindingResult result) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoService.create(body,result));
+    public ResponseEntity<LancamentoDTO> create(@RequestBody @Valid LancamentoEntity body) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoService.create(body));
     }
     @GetMapping("/findAll")
     public ResponseEntity<List<LancamentoDTO>> readAll() {

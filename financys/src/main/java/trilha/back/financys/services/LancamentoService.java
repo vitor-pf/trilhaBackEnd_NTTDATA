@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoDTO;
 import trilha.back.financys.entities.CategoriaEntity;
@@ -30,12 +29,6 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-    public boolean validateCategoryById(long idCategory) {
-        if(!categoriaRepository.findById(idCategory).isEmpty()){
-            return true;
-        }
-        return false;
-    }
 
     public List<ChartDTO> grafico() {
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
@@ -53,16 +46,14 @@ public class LancamentoService {
         return lists;
     }
 
-    public LancamentoDTO create(LancamentoEntity body, BindingResult result){
-        if(validateCategoryById(body.getCategory().getId()) && (!result.hasErrors())){
+    public LancamentoDTO create(LancamentoEntity body){
             return maptoEntity(lancamentoRepository.save(body));
-        }
-        return null;
     }
 
     public List<LancamentoDTO> readAll(){
         return maptoListEntity(lancamentoRepository.findAll());
     }
+
     public LancamentoDTO readById(long id){
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
@@ -76,7 +67,6 @@ public class LancamentoService {
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);
     }
-
 
     private LancamentoEntity mapToDto(LancamentoDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
