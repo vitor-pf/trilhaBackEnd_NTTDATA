@@ -1,15 +1,19 @@
 package trilha.back.financys.controllers;
 
-import org.springframework.beans.BeanUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import trilha.back.financys.dtos.CategoriaDTO;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.services.CategoriaService;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/categorias", produces="application/json")
 @CrossOrigin(origins = "*")
@@ -18,33 +22,24 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @PostMapping("/save")
-    public ResponseEntity<CategoriaEntity> categoriaSalva(@RequestBody CategoriaEntity body) {
-        if(categoriaService.idCategoryByName(body.getName()) == 0){
-            categoriaService.save(body);
-            return ResponseEntity.status(HttpStatus.CREATED).body(body);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<CategoriaDTO> create(@RequestBody @Valid CategoriaEntity body, BindingResult result) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.create(body, result));
     }
     @GetMapping("/findAll")
-    public ResponseEntity<List<CategoriaEntity>> categoriaLista() {
-        List categoria = categoriaService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(categoria);
+    public ResponseEntity<List<CategoriaDTO>> readAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaService.readAll());
     }
     @GetMapping("/findById/{id}")
-    public ResponseEntity<CategoriaEntity> categoriaUnica(@PathVariable Long id) {
-        CategoriaEntity categoriaEntity = categoriaService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(categoriaEntity);
+    public ResponseEntity<CategoriaDTO> readById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaService.readById(id));
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<CategoriaEntity> categoriaAlterar(@PathVariable Long id, @RequestBody CategoriaEntity body){
-        CategoriaEntity aux = categoriaService.findById(id);
-        BeanUtils.copyProperties(body,aux,"id");
-        categoriaService.save(aux);
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+    public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaEntity body){
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaService.update(id, body));
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> categoriaDeletar(@PathVariable Long id){
-        categoriaService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        categoriaService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
