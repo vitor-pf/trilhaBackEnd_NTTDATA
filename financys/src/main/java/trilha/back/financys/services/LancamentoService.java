@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoDTO;
-import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
@@ -29,20 +28,19 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-
     public List<ChartDTO> grafico() {
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
-        List<CategoriaEntity> categoriaEntities = categoriaRepository.findAll();
-
-        for (CategoriaEntity categoriaEntity : categoriaEntities){
-            ChartDTO chartDTO = new ChartDTO();
-            chartDTO.setName(categoriaEntity.getNameCategoria());
-            chartDTO.setTotal(0.0);
-            for (LancamentoEntity lancamentoEntity : categoriaEntity.getLancamentoEntity()){
-                chartDTO.setTotal(lancamentoEntity.getAmount()+chartDTO.getTotal());
-            }
-            lists.add(chartDTO);
-        }
+        categoriaRepository.findAll()
+                .stream()
+                .forEach(categoriaEntity -> {
+                    ChartDTO chartDTO = new ChartDTO();
+                    chartDTO.setName(categoriaEntity.getNameCategoria());
+                    chartDTO.setTotal(0.0);
+                    categoriaEntity.getLancamentoEntity().forEach(lan->{
+                        chartDTO.setTotal(lan.getAmount()+chartDTO.getTotal());
+                    });
+                    lists.add(chartDTO);
+                });
         return lists;
     }
 
@@ -57,7 +55,6 @@ public class LancamentoService {
     public LancamentoDTO readById(long id){
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
-
     public LancamentoDTO update(Long id, LancamentoEntity body){
         if (Objects.equals(body.getId(), lancamentoRepository.findById(id).get().getId()) ) {
             return maptoEntity(lancamentoRepository.save(body));
