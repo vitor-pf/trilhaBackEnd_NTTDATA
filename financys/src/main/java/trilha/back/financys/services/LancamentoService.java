@@ -28,7 +28,6 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-
     public List<?> grafico() {
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
         categoriaRepository.findAll()
@@ -44,8 +43,6 @@ public class LancamentoService {
                 });
         return lists;
     }
-
-
     public LancamentoDTO create(LancamentoEntity body){
             return maptoEntity(lancamentoRepository.save(body));
     }
@@ -57,7 +54,6 @@ public class LancamentoService {
     public LancamentoDTO readById(long id){
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
-
     public LancamentoDTO update(Long id, LancamentoEntity body){
         if (Objects.equals(body.getId(), lancamentoRepository.findById(id).get().getId()) ) {
             return maptoEntity(lancamentoRepository.save(body));
@@ -67,7 +63,6 @@ public class LancamentoService {
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);
     }
-
     private LancamentoEntity mapToDto(LancamentoDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
     }

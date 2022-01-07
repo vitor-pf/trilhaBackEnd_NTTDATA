@@ -24,29 +24,25 @@ public class CategoriaService {
         this.modelMapper = modelMapper;
     }
 
+
     public CategoriaDTO create(CategoriaEntity body){
         return maptoEntity(categoriaRepository.save(body));
     }
-
     public List<CategoriaDTO> readAll(){
         return maptoListEntity(categoriaRepository.findAll());
     }
-
     public CategoriaDTO readById(long id){
         return maptoEntity(categoriaRepository.findById(id).get());
     }
-
     public CategoriaDTO update(Long id, CategoriaEntity body){
         if (Objects.equals(body.getId(), categoriaRepository.findById(id).get().getId()) ) {
             return maptoEntity(categoriaRepository.save(body));
         }
         return null;
     }
-
     public void delete(long id){
         categoriaRepository.deleteById(id);
     }
-
     private CategoriaEntity mapToDto(CategoriaDTO dto) {
         return modelMapper.map(dto, CategoriaEntity.class);
     }
