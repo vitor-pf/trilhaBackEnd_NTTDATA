@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoDTO;
 import trilha.back.financys.entities.LancamentoEntity;
@@ -29,9 +28,6 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-    public LancamentoDTO create(LancamentoEntity body, BindingResult result){
-        return maptoEntity(lancamentoRepository.save(body));
-    }
     public List<?> grafico() {
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
         categoriaRepository.findAll()
@@ -47,9 +43,14 @@ public class LancamentoService {
                 });
         return lists;
     }
+    public LancamentoDTO create(LancamentoEntity body){
+            return maptoEntity(lancamentoRepository.save(body));
+    }
+
     public List<LancamentoDTO> readAll(){
         return maptoListEntity(lancamentoRepository.findAll());
     }
+
     public LancamentoDTO readById(long id){
         return maptoEntity(lancamentoRepository.findById(id).get());
     }

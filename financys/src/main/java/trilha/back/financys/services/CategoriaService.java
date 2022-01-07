@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import trilha.back.financys.dtos.CategoriaDTO;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
@@ -24,7 +23,9 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
         this.modelMapper = modelMapper;
     }
-    public CategoriaDTO create(CategoriaEntity body, BindingResult result){
+
+
+    public CategoriaDTO create(CategoriaEntity body){
         return maptoEntity(categoriaRepository.save(body));
     }
     public List<CategoriaDTO> readAll(){
