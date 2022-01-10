@@ -11,6 +11,7 @@ import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-    public List<ChartDTO> grafico() {
+    public List<?> grafico() {
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
         categoriaRepository.findAll()
                 .stream()
@@ -43,7 +44,6 @@ public class LancamentoService {
                 });
         return lists;
     }
-
     public LancamentoDTO create(LancamentoEntity body){
             return maptoEntity(lancamentoRepository.save(body));
     }
@@ -56,6 +56,9 @@ public class LancamentoService {
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
     public LancamentoDTO update(Long id, LancamentoEntity body){
+        if(categoriaRepository.findById(id).isEmpty()){
+            throw new NonUniqueResultException("Id inválido");
+        }
         Optional<LancamentoEntity> result = lancamentoRepository.findById(id);
         LancamentoEntity obj = new LancamentoEntity();
         obj.setId(body.getId());
@@ -72,7 +75,6 @@ public class LancamentoService {
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);
     }
-
     private LancamentoEntity mapToDto(LancamentoDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
     }
