@@ -14,7 +14,7 @@ import trilha.back.financys.repositories.LancamentoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -54,10 +54,17 @@ public class LancamentoService {
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
     public LancamentoDTO update(Long id, LancamentoEntity body){
-        if (Objects.equals(body.getId(), lancamentoRepository.findById(id).get().getId()) ) {
-            return maptoEntity(lancamentoRepository.save(body));
-        }
-        return null;
+        Optional<LancamentoEntity> result = lancamentoRepository.findById(id);
+        LancamentoEntity obj = new LancamentoEntity();
+        obj.setId(body.getId());
+        obj.setName(body.getName());
+        obj.setDescription(body.getDescription());
+        obj.setType(body.getType());
+        obj.setAmount(body.getAmount());
+        obj.setDate(body.getDate());
+        obj.setPaid(body.isPaid());
+        obj.setCategory(body.getCategory());
+        return maptoEntity(lancamentoRepository.save(obj));
     }
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);

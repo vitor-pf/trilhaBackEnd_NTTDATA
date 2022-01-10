@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.dtos.CategoriaDTO;
 import trilha.back.financys.entities.CategoriaEntity;
@@ -22,8 +21,8 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @PostMapping("/save")
-    public ResponseEntity<CategoriaDTO> create(@RequestBody @Valid CategoriaEntity body, BindingResult result) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.create(body, result));
+    public ResponseEntity<CategoriaDTO> create(@RequestBody @Valid CategoriaEntity body) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.create(body));
     }
     @GetMapping("/findAll")
     public ResponseEntity<List<CategoriaDTO>> readAll() {
