@@ -9,8 +9,9 @@ import trilha.back.financys.dtos.CategoriaDTO;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +25,9 @@ public class CategoriaService {
         this.modelMapper = modelMapper;
     }
     public CategoriaDTO create(CategoriaEntity body){
+        if(!categoriaRepository.findByNameCategoria(body.getNameCategoria()).isEmpty()){
+            throw new NonUniqueResultException("Já existe");
+        }
         return maptoEntity(categoriaRepository.save(body));
     }
     public List<CategoriaDTO> readAll(){
@@ -33,10 +37,12 @@ public class CategoriaService {
         return maptoEntity(categoriaRepository.findById(id).get());
     }
     public CategoriaDTO update(Long id, CategoriaEntity body){
-        if (Objects.equals(body.getId(), categoriaRepository.findById(id).get().getId()) ) {
-            return maptoEntity(categoriaRepository.save(body));
-        }
-        return null;
+        Optional<CategoriaEntity> result = categoriaRepository.findById(id);
+        CategoriaEntity obj = new CategoriaEntity();
+        obj.setId(result.get().getId());
+        obj.setNameCategoria(body.getNameCategoria());
+        obj.setDescriptionCategoria(body.getDescriptionCategoria());
+        return maptoEntity(categoriaRepository.save(obj));
     }
     public void delete(long id){
         categoriaRepository.deleteById(id);
