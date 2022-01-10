@@ -47,7 +47,6 @@ public class CategoriaService {
     public void delete(long id){
         categoriaRepository.deleteById(id);
     }
-
     private CategoriaEntity mapToDto(CategoriaDTO dto) {
         return modelMapper.map(dto, CategoriaEntity.class);
     }
