@@ -19,7 +19,6 @@ import java.util.List;
 public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
-
     @PostMapping("/save")
     public ResponseEntity<CategoriaDTO> create(@RequestBody @Valid CategoriaEntity body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.create(body));
