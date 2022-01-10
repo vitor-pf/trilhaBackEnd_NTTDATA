@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import trilha.back.financys.entities.CategoriaEntity;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long> {
 
-    ArrayList<CategoriaEntity> findByNameCategoria(String nameCategoria);
+    Optional<CategoriaEntity> findByNameCategoria(String nameCategoria);
 }
 
