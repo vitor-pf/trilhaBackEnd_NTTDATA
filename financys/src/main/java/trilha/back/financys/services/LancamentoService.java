@@ -11,6 +11,7 @@ import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,9 @@ public class LancamentoService {
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
     public LancamentoDTO update(Long id, LancamentoEntity body){
+        if(categoriaRepository.findById(id).isEmpty()){
+            throw new NonUniqueResultException("Id inválido");
+        }
         Optional<LancamentoEntity> result = lancamentoRepository.findById(id);
         LancamentoEntity obj = new LancamentoEntity();
         obj.setId(body.getId());
