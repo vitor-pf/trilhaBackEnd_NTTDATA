@@ -19,7 +19,6 @@ import java.util.List;
 public class LancamentoController {
     @Autowired
     private LancamentoService lancamentoService;
-
     @GetMapping("/grafico")
     public ResponseEntity<?> grafico() {
         return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
