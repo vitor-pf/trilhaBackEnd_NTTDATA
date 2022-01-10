@@ -65,6 +65,7 @@ public class LancamentoService {
         obj.setPaid(body.isPaid());
         obj.setCategory(body.getCategory());
         return maptoEntity(lancamentoRepository.save(obj));
+
     }
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);

@@ -56,4 +56,5 @@ public class CategoriaService {
     private List<CategoriaDTO> maptoListEntity(List<CategoriaEntity> entity) {
         return (List<CategoriaDTO>) modelMapper.map(entity, new TypeToken<List<CategoriaDTO>>(){}.getType());
     }
+
 }
