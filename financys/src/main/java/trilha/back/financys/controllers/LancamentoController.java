@@ -2,7 +2,7 @@ package trilha.back.financys.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import trilha.back.financys.Lancamento;
+import trilha.back.financys.entities.Lancamento;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package trilha.back.financys;
+package trilha.back.financys.entities;
 
 
 public class Categoria {

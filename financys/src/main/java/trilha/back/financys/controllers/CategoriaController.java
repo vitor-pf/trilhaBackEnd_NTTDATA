@@ -3,7 +3,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import trilha.back.financys.Categoria;
+import trilha.back.financys.entities.Categoria;
 import java.util.ArrayList;
 import java.util.List;
 
