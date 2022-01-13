@@ -11,9 +11,9 @@ import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
 
-import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -44,24 +44,39 @@ public class LancamentoService {
                 });
         return lists;
     }
+
+
+    private void isCategoryById(Long id){
+        categoriaRepository.findById(id)
+                .orElseThrow(()-> new NoSuchElementException("error id: "+ id));
+    }
     public LancamentoDTO create(LancamentoEntity body){
-            return maptoEntity(lancamentoRepository.save(body));
+        isCategoryById(body.getCategory().getId());
+        return maptoEntity(lancamentoRepository.save(body));
     }
 
-    public List<LancamentoDTO> readAll(){
-        return maptoListEntity(lancamentoRepository.findAll());
-    }
 
+    public List<LancamentoDTO> readAll(String paid) {
+        if (paid.equals("pago")) {
+            return maptoListEntity(lancamentoRepository.findByPaid(true));
+        }
+        else if (paid.equals("pendente")) {
+            return maptoListEntity(lancamentoRepository.findByPaid(false));
+        }
+        else if(paid.isEmpty()) {
+            return maptoListEntity(lancamentoRepository.findAll());
+        }else {
+            return null;
+        }
+    }
     public LancamentoDTO readById(long id){
         return maptoEntity(lancamentoRepository.findById(id).get());
     }
     public LancamentoDTO update(Long id, LancamentoEntity body){
-        if(categoriaRepository.findById(id).isEmpty()){
-            throw new NonUniqueResultException("Id inválido");
-        }
         Optional<LancamentoEntity> result = lancamentoRepository.findById(id);
         LancamentoEntity obj = new LancamentoEntity();
-        obj.setId(body.getId());
+
+        obj.setId(result.get().getId());
         obj.setName(body.getName());
         obj.setDescription(body.getDescription());
         obj.setType(body.getType());
@@ -70,7 +85,6 @@ public class LancamentoService {
         obj.setPaid(body.isPaid());
         obj.setCategory(body.getCategory());
         return maptoEntity(lancamentoRepository.save(obj));
-
     }
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);

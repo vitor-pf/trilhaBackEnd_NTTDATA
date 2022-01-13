@@ -40,7 +40,8 @@ public class LancamentoEntity implements Serializable {
     @Column(name = "paid")
     @NotNull(message = "O pagamento é obrigatório!")
     private boolean paid;
+
     @ManyToOne
-    @JoinColumn(name = "category", referencedColumnName = "id")
+    @JoinColumn(name = "categoryId", referencedColumnName = "id")
     private CategoriaEntity category;
 }

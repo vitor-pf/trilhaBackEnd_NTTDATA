@@ -28,8 +28,8 @@ public class LancamentoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoService.create(body));
     }
     @GetMapping("/findAll")
-    public ResponseEntity<List<LancamentoDTO>> readAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.readAll());
+    public ResponseEntity<List<LancamentoDTO>> readAll(@RequestParam(required = false, defaultValue = "") String paid) {
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.readAll(paid));
     }
     @GetMapping("/findById/{id}")
     public ResponseEntity<LancamentoDTO> readById(@PathVariable Long id) {
