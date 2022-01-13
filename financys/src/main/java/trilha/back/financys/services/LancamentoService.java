@@ -29,7 +29,9 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
         this.modelMapper = modelMapper;
     }
-    public List<?> grafico() {
+
+    public List<ChartDTO> grafico() {
+
         List<ChartDTO> lists= new ArrayList<ChartDTO>();
         categoriaRepository.findAll()
                 .stream()
@@ -89,6 +91,7 @@ public class LancamentoService {
     public void deleteById(long id){
         lancamentoRepository.deleteById(id);
     }
+
     private LancamentoEntity mapToDto(LancamentoDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
     }
