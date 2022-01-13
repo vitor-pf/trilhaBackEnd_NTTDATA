@@ -32,7 +32,7 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.readById(id));
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaEntity body){
+    public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody @Valid CategoriaEntity body){
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.update(id, body));
     }
     @DeleteMapping("/delete/{id}")

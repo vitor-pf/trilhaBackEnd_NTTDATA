@@ -28,6 +28,7 @@ public class CategoriaEntity implements Serializable {
     @NotBlank(message = "A descrição é obrigatório!")
     @Size(min = 15,max = 50,message = "A descrição deve conter entre 15 a 50 caracteres!")
     private String descriptionCategoria;
+
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<LancamentoEntity> lancamentoEntity;
