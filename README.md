@@ -139,10 +139,34 @@ A *model (Entety)* se concentrar todas as entidades ou tabelas do negócio, é p
 O *Repository* é a última camada ao banco de dados, é sendo responsável pelo CRUD ( create, read, update e delete), ou seja, somente ele pode executar as operações do banco de dados.
 
 
-# DESAFIO 6
+## DESAFIO 6
 #### O que significa DTO, e qual sua importância? 
 O DTO (Data Transfer Object), o principal objetivo do padrão é reduzir viagens de ida e volta ao servidor, ele é usado para transferir dados entre subsistemas de uma aplicação em forma de objeto.
 
 O dto contém vários benefícios entre eles:
 Reduz a sobrecarga na rede, já o encapsulamento traduz a estrutura do objeto e os dados para um formato específico e muito mais.
 O dto é a principal porta de entrada e saída de dados, sendo possível controlar rigorosamente todo o fluxo na aplicação. Ou seja, uma simples classe, mas muito importante na questão performance e segurança.
+
+
+## DESAFIO 8
+#### a) O que são exceptions?
+As Exceptions (exceções) em sistemas, serve para prevenir algo incomum na lógica da aplicação, ou seja, em um sistema de login pode acontecer diversas falhas acarentando em exceções graves no sistema.
+Essas exceções podem e devem ser tratadas com métodos prontos ou personalizados, e direcionados de forma correta para o usuário. 
+
+#### b) Qual é o funcionamento do try, catch e finally?
+O try, serve para testar o código, ou seja, o sistema deve funcionar somente desta forma sem erros.
+Já o catch, funciona para pegar o possível erro esperado, e direcionar o tratamento correto para aquela exceção especifica ou geral.
+No caso do Finally, serve para continuar o sistema independentemente da falha.
+
+#### c) Qual a relação entre “try, catch e finally” e “throws”? 
+O try, catch e o finally, serve para testar, tratar e continuar o sistema, normalmente sendo obrigado pela palavra throws no método, ou seja, sem ele ocorre erro de compilação na aplicação.
+A palavra throws na escrita do método, obriga o tratamento daquelas exceções no código.
+
+#### d) Para que serve a annotation @ExceptionHandler?
+A anotação ExceptionHandler nos permite manipular uma exceção para um controller, ou seja, criar exceção personalizada para o sistema.
+
+#### e) Para que serve o comando throw?
+O throw serve para lança um exceção.
+
+#### f) Para que serve a annotation @ControllerAdvice?
+A anotação ControllerAdvice é um interceptador de exceção para qualquer parte do sistema, ou seja, um nível superior ao ExceptionHandler e com todos os métodos gerais.
