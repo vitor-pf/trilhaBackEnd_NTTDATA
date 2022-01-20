@@ -5,13 +5,13 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import trilha.back.financys.dtos.CategoriaDTO;
+import trilha.back.financys.dtos.CategoriaRequestDTO;
+import trilha.back.financys.dtos.CategoriaResponseDTO;
 import trilha.back.financys.entities.CategoriaEntity;
+import trilha.back.financys.exceptions.NotFoundException;
 import trilha.back.financys.repositories.CategoriaRepository;
 
-import javax.persistence.NonUniqueResultException;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,37 +24,53 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
         this.modelMapper = modelMapper;
     }
-    public CategoriaDTO create(CategoriaEntity body){
-        if(!categoriaRepository.findByNameCategoria(body.getNameCategoria()).isEmpty()){
-            throw new NonUniqueResultException("Já existe");
+    private void isCategoryByName(String name){
+        if(!categoriaRepository.findByNameCategoria(name).isEmpty())
+            throw new NotFoundException("Já existe: "+ name);
+    }
+    public CategoriaResponseDTO create(CategoriaRequestDTO body){
+        isCategoryByName(body.getNameCategoria());
+        return toResponseDTO(categoriaRepository.save(toEntity(body)));
+    }
+    public List<CategoriaResponseDTO> readAll(){
+        return toListResponseDTO(categoriaRepository.findAll());
+    }
+    public CategoriaResponseDTO readById(long id){
+        try{
+            return toResponseDTO(categoriaRepository.findById(id).get());
+        } catch (Exception e) {
+            throw new NotFoundException("Não existe o id: " + id);
         }
-        return maptoEntity(categoriaRepository.save(body));
     }
-    public List<CategoriaDTO> readAll(){
-        return maptoListEntity(categoriaRepository.findAll());
-    }
-    public CategoriaDTO readById(long id){
-        return maptoEntity(categoriaRepository.findById(id).get());
-    }
-    public CategoriaDTO update(Long id, CategoriaEntity body){
-        Optional<CategoriaEntity> result = categoriaRepository.findById(id);
-        CategoriaEntity obj = new CategoriaEntity();
-        obj.setId(result.get().getId());
-        obj.setNameCategoria(body.getNameCategoria());
-        obj.setDescriptionCategoria(body.getDescriptionCategoria());
-        return maptoEntity(categoriaRepository.save(obj));
+    public CategoriaResponseDTO update(Long id, CategoriaRequestDTO body){
+        try {
+            CategoriaEntity result = categoriaRepository.findById(id).get();
+            CategoriaEntity obj = new CategoriaEntity();
+
+            obj.setId(result.getId());
+            obj.setNameCategoria(body.getNameCategoria());
+            obj.setDescriptionCategoria(body.getDescriptionCategoria());
+            return toResponseDTO(categoriaRepository.save(obj));
+        } catch (Exception e){
+            throw new NotFoundException("Não existe o id: "+ id);
+        }
     }
     public void delete(long id){
-        categoriaRepository.deleteById(id);
-    }
-    private CategoriaEntity mapToDto(CategoriaDTO dto) {
-        return modelMapper.map(dto, CategoriaEntity.class);
-    }
-    private CategoriaDTO maptoEntity(CategoriaEntity entity) {
-        return modelMapper.map(entity, CategoriaDTO.class);
-    }
-    private List<CategoriaDTO> maptoListEntity(List<CategoriaEntity> entity) {
-        return (List<CategoriaDTO>) modelMapper.map(entity, new TypeToken<List<CategoriaDTO>>(){}.getType());
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (Exception e){
+            throw new NotFoundException("Não existe o id: "+ id);
+        }
     }
 
+
+    private CategoriaEntity toEntity(CategoriaRequestDTO dto) {
+        return modelMapper.map(dto, CategoriaEntity.class);
+    }
+    private CategoriaResponseDTO toResponseDTO(CategoriaEntity entity) {
+        return modelMapper.map(entity, CategoriaResponseDTO.class);
+    }
+    private List<CategoriaResponseDTO> toListResponseDTO(List<CategoriaEntity> entity) {
+        return (List<CategoriaResponseDTO>) modelMapper.map(entity, new TypeToken<List<CategoriaResponseDTO>>(){}.getType());
+    }
 }

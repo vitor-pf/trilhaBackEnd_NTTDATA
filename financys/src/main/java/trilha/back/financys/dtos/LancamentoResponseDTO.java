@@ -10,8 +10,7 @@ import trilha.back.financys.entities.CategoriaEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LancamentoDTO {
-    private Long id;
+public class LancamentoResponseDTO {
     private String name;
     private String description;
     private String type;
@@ -19,5 +18,4 @@ public class LancamentoDTO {
     private String date;
     private boolean paid;
     private CategoriaEntity category;
-
 }
