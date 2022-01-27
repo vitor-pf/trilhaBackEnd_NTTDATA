@@ -1,18 +1,16 @@
 package trilha.back.financys.controllers;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.dtos.CategoriaRequestDTO;
 import trilha.back.financys.dtos.CategoriaResponseDTO;
-import trilha.back.financys.services.CategoriaService;
+import trilha.back.financys.services.impl.CategoriaService;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/categorias", produces="application/json")
 @CrossOrigin(origins = "*")

@@ -1,6 +1,5 @@
-package trilha.back.financys.services;
+package trilha.back.financys.services.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +9,28 @@ import trilha.back.financys.dtos.CategoriaResponseDTO;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.exceptions.NotFoundException;
 import trilha.back.financys.repositories.CategoriaRepository;
+import trilha.back.financys.services.CategoriaInterface;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @Service
-public class CategoriaService {
+public class CategoriaService implements CategoriaInterface {
     @Autowired
     CategoriaRepository categoriaRepository;
     @Autowired
     ModelMapper modelMapper;
-    public CategoriaService(CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
-        this.categoriaRepository = categoriaRepository;
-        this.modelMapper = modelMapper;
-    }
-    private void isCategoryByName(String name){
-        if(!categoriaRepository.findByNameCategoria(name).isEmpty())
-            throw new NotFoundException("Já existe: "+ name);
-    }
+
+    @Override
     public CategoriaResponseDTO create(CategoriaRequestDTO body){
         isCategoryByName(body.getNameCategoria());
         return toResponseDTO(categoriaRepository.save(toEntity(body)));
     }
+    @Override
     public List<CategoriaResponseDTO> readAll(){
         return toListResponseDTO(categoriaRepository.findAll());
     }
+    @Override
     public CategoriaResponseDTO readById(long id){
         try{
             return toResponseDTO(categoriaRepository.findById(id).get());
@@ -42,21 +38,20 @@ public class CategoriaService {
             throw new NotFoundException("Não existe o id: " + id);
         }
     }
+    @Override
     public CategoriaResponseDTO update(Long id, CategoriaRequestDTO body){
         try {
-            CategoriaEntity result = categoriaRepository.findById(id).get();
-            CategoriaEntity obj = new CategoriaEntity();
+            readById(id);
+            return toResponseDTO(categoriaRepository.save(preUpdate(id, body)));
 
-            obj.setId(result.getId());
-            obj.setNameCategoria(body.getNameCategoria());
-            obj.setDescriptionCategoria(body.getDescriptionCategoria());
-            return toResponseDTO(categoriaRepository.save(obj));
         } catch (Exception e){
             throw new NotFoundException("Não existe o id: "+ id);
         }
     }
+    @Override
     public void delete(long id){
         try {
+            readById(id);
             categoriaRepository.deleteById(id);
         } catch (Exception e){
             throw new NotFoundException("Não existe o id: "+ id);
@@ -64,6 +59,17 @@ public class CategoriaService {
     }
 
 
+    private void isCategoryByName(String name){
+        if(!categoriaRepository.findByNameCategoria(name).isEmpty())
+            throw new NotFoundException("Já existe: "+ name);
+    }
+    private CategoriaEntity preUpdate(Long id, CategoriaRequestDTO body) {
+        CategoriaEntity categoriaEntity = new CategoriaEntity();
+        categoriaEntity.setId(id);
+        categoriaEntity.setNameCategoria(body.getNameCategoria());
+        categoriaEntity.setDescriptionCategoria(body.getDescriptionCategoria());
+        return categoriaEntity;
+    }
     private CategoriaEntity toEntity(CategoriaRequestDTO dto) {
         return modelMapper.map(dto, CategoriaEntity.class);
     }

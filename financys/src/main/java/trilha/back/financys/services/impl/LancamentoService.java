@@ -1,6 +1,5 @@
-package trilha.back.financys.services;
+package trilha.back.financys.services.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,27 +12,70 @@ import trilha.back.financys.exceptions.DivideException;
 import trilha.back.financys.exceptions.NotFoundException;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
+import trilha.back.financys.services.LancamentoInterface;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-@RequiredArgsConstructor
+
 @Service
-public class LancamentoService {
+public class LancamentoService implements LancamentoInterface {
     @Autowired
     private LancamentoRepository lancamentoRepository;
+    @Autowired
+    private CategoriaService categoriaService;
     @Autowired
     CategoriaRepository categoriaRepository;
     @Autowired
     ModelMapper modelMapper;
-
-    public LancamentoService(LancamentoRepository lancamentoRepository, ModelMapper modelMapper) {
-        this.lancamentoRepository = lancamentoRepository;
-        this.modelMapper = modelMapper;
+    @Override
+    public LancamentoResponseDTO create(LancamentoRequestDTO body) {
+        categoriaService.readById(body.getCategory().getId());
+        return toResponseDTO(lancamentoRepository.save(toEntity(body)));
     }
+    @Override
+    public List<LancamentoResponseDTO> readAll(String paid) {
+        if (!paid.isEmpty()) {
+            return paid.equalsIgnoreCase("pago") || paid.equalsIgnoreCase("pendente")
+            ? toListResponseDTO(lancamentoRepository.findByPaid(paid.equalsIgnoreCase("pago")))
+            : null;
+        }
+        return toListResponseDTO(lancamentoRepository.findAll());
+    }
+    @Override
+    public LancamentoResponseDTO readById(long id) {
+        try {
+            return toResponseDTO(lancamentoRepository.findById(id).get());
+        } catch (Exception e) {
+            throw new NotFoundException("Não existe o id: " + id);
+        }
+    }
+    @Override
+    public LancamentoResponseDTO update(Long id, LancamentoRequestDTO body) {
+        try {
+            readById(id);
+            categoriaService.readById(body.getCategory().getId());
+            return toResponseDTO(lancamentoRepository.save(preUpdate(id, body)));
 
+        }catch (EntityNotFoundException e){
+            throw new EntityNotFoundException("Não existe o id da categoria: ");
+        }catch (NoSuchElementException e){
+            throw new NotFoundException("Não existe o id: " + id);
+        }
+    }
+    @Override
+    public void deleteById(long id) {
+        try {
+            readById(id);
+            lancamentoRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Não existe o id: " + id);
+        }
+    }
+    @Override
     public List<ChartDTO> grafico() {
-
         List<ChartDTO> lists = new ArrayList<ChartDTO>();
         categoriaRepository.findAll()
                 .stream()
@@ -48,63 +90,7 @@ public class LancamentoService {
                 });
         return lists;
     }
-
-
-    private void isCategoryById(Long id) {
-        categoriaRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Não existe o id: " + id));
-    }
-
-    public LancamentoResponseDTO create(LancamentoRequestDTO body) {
-        isCategoryById(body.getCategory().getId());
-        return toResponseDTO(lancamentoRepository.save(toEntity(body)));
-    }
-
-
-    public List<LancamentoResponseDTO> readAll(String paid) {
-        if (!paid.isEmpty()) {
-            return paid.equalsIgnoreCase("pago") || paid.equalsIgnoreCase("pendente")
-            ? toListResponseDTO(lancamentoRepository.findByPaid(paid.equalsIgnoreCase("pago")))
-            : null;
-        }
-        return toListResponseDTO(lancamentoRepository.findAll());
-    }
-
-    public LancamentoResponseDTO readById(long id) {
-        try {
-            return toResponseDTO(lancamentoRepository.findById(id).get());
-        } catch (Exception e) {
-            throw new NotFoundException("Não existe o id: " + id);
-        }
-    }
-
-    public LancamentoResponseDTO update(Long id, LancamentoRequestDTO body) {
-        try {
-            LancamentoEntity result = lancamentoRepository.findById(id).get();
-            LancamentoEntity obj = new LancamentoEntity();
-
-            obj.setId(result.getId());
-            obj.setName(body.getName());
-            obj.setDescription(body.getDescription());
-            obj.setType(body.getType());
-            obj.setAmount(body.getAmount());
-            obj.setDate(body.getDate());
-            obj.setPaid(body.isPaid());
-            obj.setCategory(body.getCategory());
-            return toResponseDTO(lancamentoRepository.save(obj));
-        } catch (Exception e) {
-            throw new NotFoundException("Não existe o id: " + id);
-        }
-    }
-
-    public void deleteById(long id) {
-        try {
-            lancamentoRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new NotFoundException("Não existe o id: " + id);
-        }
-    }
-
+    @Override
     public Integer calculaMedia(Integer x, Integer y) {
         try {
             return (x / y);
@@ -113,7 +99,18 @@ public class LancamentoService {
         }
     }
 
-
+    private LancamentoEntity preUpdate(Long id, LancamentoRequestDTO body) {
+        LancamentoEntity lancamentoEntity = new LancamentoEntity();
+        lancamentoEntity.setId(id);
+        lancamentoEntity.setName(body.getName());
+        lancamentoEntity.setDescription(body.getDescription());
+        lancamentoEntity.setType( body.getType().getType() );
+        lancamentoEntity.setAmount(body.getAmount());
+        lancamentoEntity.setDate(body.getDate());
+        lancamentoEntity.setPaid(body.isPaid());
+        lancamentoEntity.setCategory(body.getCategory());
+        return lancamentoEntity;
+    }
     private LancamentoEntity toEntity(LancamentoRequestDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
     }
