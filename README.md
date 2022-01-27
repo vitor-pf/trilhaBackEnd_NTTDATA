@@ -221,3 +221,92 @@ Princípio da Segregação da Interface - Repositories.
 
 Princípio da inversão da dependência - Services.
 
+
+## DESAFIO 10
+#### a) O que você entende por Spring Framework?
+O projeto Spring é um framework com diversos módulos (Spring Boot, MVC, Data, Security) para facilitar a criação de uma aplicação, e foi construído com os conceitos de Inversão de Controle e Injeção de Dependências são peças principais do framework.
+O Spring contém diversos módulos para criar várias aplicações web, desktop e entre outras. 
+
+#### b) Cite 3 exemplos de ferramentas Spring e suas respectivas finalidades;
+Spring Boot - É o módulo start do sistema, ou seja, um pacote todo configurado para aplicação.
+Spring Data - É um módulo para manipular aos dados.
+Spring Security - É um módulo para cuidar da seguração da aplicação, ou seja, gerencia os acessos do sistema.
+
+#### c) Quais ferramentas do Spring foram utilizadas na trilha até o momento?
+Spring Boot, Spring MVC, Spring DATA.
+
+#### d) Cite 5 vantagens em utilizar Spring;
+1 - Projeto inicial completo pronto para rodar aplicação.
+2 - Diversos módulos separados para construir qualquer aplicação.
+3 - Facilidade na manutenção e com uma grande comunidade para diversas soluções de problemas.
+4 - Desenvolvimento rápido e fácil com uso das anotações e padrões.
+5 - Framework fortemente reconhecido no mercado em todos os níveis.
+
+#### e) Descreva os passos de criação de uma Web API Spring boot, com conexão com SQL Server;
+1 - Inicie o projeto em https://start.spring.io/.
+2 - Adicione as dependências Spring Data JPA e MS SQL Server Driver.
+3 - Configure o arquivo application.properties com os dados do banco.
+4 - Construa a aplicação.
+
+#### f) Qual a funcionalidade do pom.xml?
+O pom.xml (Project Object Model), é um arquivo gerenciado pelo Maven que contém todas as informações do projeto, ou seja, configurações, dependências e dados gerais da aplicação.
+
+#### g) Qual a funcionalidade do applications.properties?
+O applications.properties é o arquivo configuração da aplicação, diferente da anotação @Configuration.
+Esse arquivo contém configurações de ambientes, ou seja, produção, desenvolvimento, teste e entre outros.
+
+#### h) Qual o propósito das Annotations?
+O Spring adotou alguns padrões para sinalizar o desenvolvedor, e para utilizar esses padrões prontos do framework é preciso adicionar algumas annotations já existentes.
+
+#### i) Cite 10 annotations, com suas respectivas finalidades e descreva ou desenhe um cenário exemplificando a sua utilização;
+1 - @SpringBootApplication - Anotação utilizada em cima da classe principal.
+    Utilizada em classe principal do projeto.
+
+2 - @Configuration - Anotação utilizada em cima das classes configurações.
+    Utilizada em classes separadas para configuração especificas. exem.: SwaggerConfig.
+
+3 - @RestController - Anotação utilizada em cima das classes para criar os controladores.
+    Utilizada em classes separadas para criar um controlador na API REST.
+
+4 - @RequestMapping - Anotação utilizada em cima das classes para mapeia o endereço na API REST.
+    Utilizada em classes separadas dentro do @RessController para mapeia requisições REST.
+
+5 - @Service - Anotação utilizada em cima das classes para criar um serviço ou lógica para o controlador.
+    Utilizada em classes separadas para determinados serviços.
+
+6 - @Entity - Anotação utilizada em cima das classes para criar uma entidade no banco com os atributos.
+    Utilizada em classes separadas para representar uma entidade no banco de dados.
+
+7 - @Repository - Anotação utilizada em cima das classes para relacionas as entidades ao JPA e suas funções.
+    Utilizada em classes separadas normalmente relacionadas as entidades para realizar operações no banco.
+
+8 - @Query - Anotação utilizada em cima das funções do @Repository para criar consultas personalizadas ao banco (JPQL).
+    Utilizada em classes do @Repository para personalizar uma consulta no banco.
+
+9 - @Autowired - Anotação utilizada em cima dos atributos ou construtores para criar uma injeção de dependência.
+    Utilizada em classes para injetar aquela dependência no projeto.
+
+10- @ExcepetionHandler - Anotação utilizada em cima das funções do @ControllerAdvice para manipular aquela exceção especifica.
+    Utilizada em classes do @ControllerAdvice para manipular de exceção.
+
+#### j) O que é um advice em Spring? Quais os tipos de advice para o Spring?
+O advice em Spring é uma programação orientado a aspectos, ou seja, uma parte do sistema que deseja se comportamentar de outra forma, esse aspecto pode ser executado antes, depois ou durante a aplicação.
+Before advice - Essa anotação executa uma função antes da chamada.
+After advice - Essa anotação executa uma função depois da chamada, podendo ter Throwing como falha ou Returning para o sucesso na execução.
+Around advice - Essa anotação executa uma função junto com chamada invocada, podendo acompanhar a execução do começo ao fim.
+
+#### k) O que é Spring IoC Container?
+
+O Spring IoC Container é o responsável pelos objetos, é o centro do framework e contém 2 tipos de container. E ele que cuida de todo o ciclo do elemento desda criação até destruição.
+
+#### l) Como adicionamos segurança à nossa aplicação Spring?
+O Spring Security é a lib responsável pela segurança, através desse pacote podemos obter acesso e armazenar na aplicação.
+
+#### m) Qual é o pacote Spring responsável pelas conexões com os bancos de dados?
+O Spring Data contém diversos drivers para conexão com o banco de dados, e o arquivo que configura as informações do bando é o application.properties.
+
+#### n) Explique e exemplifique como criar um agendamento de execução de métodos Spring; Cite exemplos de usabilidade;
+O Spring possui uma anotação para o agendamento de método, chamado de @Scheduled que fica em cima do método junto com alguns paramentos de configuração.
+Sim, a forma simples e rápido, exemplo:
+Digamos que gostaríamos de ter uma informação de venda toda semana.
+Basta colocamos a anotação com suas configurações e será agendado aquele método que traz essas informações.
