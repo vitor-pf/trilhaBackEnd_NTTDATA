@@ -1,18 +1,17 @@
 package trilha.back.financys.controllers;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoRequestDTO;
 import trilha.back.financys.dtos.LancamentoResponseDTO;
-import trilha.back.financys.services.LancamentoService;
+import trilha.back.financys.services.impl.LancamentoService;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/lancamentos", produces="application/json")
 @CrossOrigin(origins = "*")
@@ -20,7 +19,7 @@ public class LancamentoController {
     @Autowired
     private LancamentoService lancamentoService;
     @GetMapping("/grafico")
-    public ResponseEntity <?> grafico() {
+    public ResponseEntity <List<ChartDTO>> grafico() {
         return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
     }
     @PostMapping("/save")

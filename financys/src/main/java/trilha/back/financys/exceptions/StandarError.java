@@ -13,6 +13,6 @@ public class StandarError implements Serializable {
 
     private Instant timestamp;
     private Integer status;
-    private String message;
+    private String error;
     private String path;
 }

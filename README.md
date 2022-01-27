@@ -170,3 +170,54 @@ O throw serve para lança um exceção.
 
 #### f) Para que serve a annotation @ControllerAdvice?
 A anotação ControllerAdvice é um interceptador de exceção para qualquer parte do sistema, ou seja, um nível superior ao ExceptionHandler e com todos os métodos gerais.
+
+
+## DESAFIO 9
+#### a) O que é um padrão de projeto e por que nós os utilizamos?
+O padrão de projeto é uma série de sugestões para o desenvolvimento de software. Essas sugestões foram criadas para facilitar, padronizar, reaproveitar e compartilhar o código, sendo assim, reconhecida por toda a comunidade.
+Os padrões de projetos contém 3 categorias, criação, estrutural e comportamental.
+Essas categorias contém 23 sugestões para facilitar o código, todas utilizam os conceitos SOLID junto com POO.
+Criação: abstract factory, builder, factory method, prototype, singleton.
+Estrutural: adapter, bridge, composite, decorator, facade, flyweight, proxy.
+Comportamental: chain of responsibility, command, interpreter, iterator, mediator, memento, observer, state, strategy, template method, visitor.
+
+#### b) Cite e explique com suas palavras:
+#### I. Um dos padrões de criação;
+Abstract factory - Criação: Permite a criação de grupos de objetos relacionados ou dependentes por meio de interface e sem que a classe principal seja especificada, sendo assim, possível alterar sem danos a aplicação.
+#### II. Um dos padrões estruturais;
+Adapter - Estrutural: 
+Atua como um conversor entre objetos irreconhecíveis. Ele captura chamadas para um objeto e as deixam reconhecíveis tanto em formato como interface para este segundo objeto.
+#### III. Um dos padrões comportamentais;
+Observer - Comportamental: É um objeto um-para-muitos de modo que quando um objeto muda o estado, todos seus dependentes são notificados e atualizados automaticamente.
+
+#### c) Explique o conceito de arquitetura de software e seu proposito;
+Os conceitos de arquitetura de software teve origem com base na área da construção civil, esses modelos surgiram para melhorar as funções e relacionamentos em subsistemas com esses projetos, visando diversos aspectos no software. O profissional que projeta o software deve ser capaz de identicar diversos pontos, entre eles: linguagem de programação, modelo arquitetura (MVC, Microsserviços, P2P e outros), servidores, banco de dados, plataformas operacionais.
+
+#### I. Qual arquitetura estamos seguindo até o momento? Justifique sua resposta.
+Arquitetura em MVC - O projeto contém diversas camadas na aplicação. O controllers (dtos, services, exceptions), model (entities, repositories). Cada um com sua responsabilidade na aplicação. 
+
+#### g) O que significa a sigla SOLID?
+ 
+S-Single Responsiblity Principle (Princípio da responsabilidade única), uma classe deve ter uma única tarefa para executar.
+
+O-Open-Closed Principle (Princípio Aberto-Fechado), uma classe deve estar abertos para extensão, mas fechados para modificação.
+
+L-Liskov Substitution Principle (Princípio da substituição de Liskov), uma classe derivada deve ser substituível por sua classe base.
+
+I-Interface Segregation Principle (Princípio da Segregação da Interface), uma classe não deve forçar implementar interface que não vai utilizar.
+
+D-Dependency Inversion Principle (Princípio da inversão da dependência), uma classe de alto ou baixo nível devem depender da abstração.
+
+
+#### h) Quais princípios foram utilizados no projeto até o momento? Explique.
+Os princípios utilizados foram:
+Princípio da responsabilidade única - SwaggerConfig, Controllers, Services (Mapper), Exceptions.
+
+Princípio Aberto-Fechado - Repositories.
+
+Princípio da substituição de Liskov - Exceptions.
+
+Princípio da Segregação da Interface - Repositories.
+
+Princípio da inversão da dependência - Services.
+
