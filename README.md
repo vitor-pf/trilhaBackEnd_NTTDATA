@@ -310,3 +310,31 @@ O Spring possui uma anotação para o agendamento de método, chamado de @Schedu
 Sim, a forma simples e rápido, exemplo:
 Digamos que gostaríamos de ter uma informação de venda toda semana.
 Basta colocamos a anotação com suas configurações e será agendado aquele método que traz essas informações.
+
+
+## DESAFIO 11
+#### a) O que são libs quando se trata de código? 
+As libs são um conjunto de funcionalidades de projetos, ou seja, são partes de sistemas que podem e/ou devem ser utilizados em uma aplicação.
+
+#### b) Cite 2 libs populares no Java e seu objetivo;
+1 - lomblok é uma lib para gerar em tempo de compilação os métodos getters, setters e construtores.
+2 - Log4j é uma lib para fornecer logs para sua aplicação.
+
+#### c) Qual é o propósito do Maven, e qual é o seu relacionamento com o arquivo pom.xml?
+O Maven é o gerenciador de todo projeto, ou seja, o arquivo pom.xml contém todas as informações da aplicação.
+Esses dados são: nome, pacotes, dependências, configurações da aplicação e muito mais.
+O arquivo pom.xml gerenciado pelo Maven, podemos dizer que é o arquivo principal para compartilhar e subir a aplicação.
+
+#### d) Qual é a diferença do Maven para o Grandle? 
+A diferença entre Maven e Gradle, ambos são gerenciadores projetos e com linguagem diferentes.
+
+#### e) Com os conhecimentos adquiridos até o agora, realize uma conexão com o desafio 3 onde falamos sobre JDBC, os drivers de comunicação com os bancos de dados. 
+#### I. Qual a relação entre os termos lib, driver e JDBC?
+O Framework Spring contém diversas libs como o Spring Data, e o mesmo contém o JDBC que por sua vez também tem os drivers. Essas libs se complementam formando um grande sistema.
+O JDBC hoje é nativo do Java.
+
+#### II. Como é adicionado uma lib no projeto?
+A lib precisa está no projeto (Maven - pom.xml), e ser adicionada ao código.
+
+#### III.  Escolha  um  banco  de  dados  (menos  o  H2)  e  explique  como  utilizar  o  driver  de  comunicação.
+Basta adicionar a dependência do driver pom.xml e configurar o arquivo application.properties.
