@@ -39,4 +39,13 @@ public class ControllerException extends RuntimeException{
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
+    @ExceptionHandler(NotFoundParamException.class)
+    public ResponseEntity<StandarError> NotFoundParamException(NotFoundParamException e, HttpServletRequest request){
+        StandarError err = new StandarError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.NO_CONTENT.value());
+        err.setError(e.getMessage());
+        err.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(err);
+    }
 }

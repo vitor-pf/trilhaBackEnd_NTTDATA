@@ -11,4 +11,5 @@ public interface LancamentoRepository extends JpaRepository<LancamentoEntity, Lo
 
     List<LancamentoEntity> findByPaid(boolean paid);
 
+    List<LancamentoEntity> findAllByDateAndAmountAndPaid(String date, Double amount, boolean paid);
 }

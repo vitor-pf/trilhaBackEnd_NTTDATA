@@ -338,3 +338,37 @@ A lib precisa está no projeto (Maven - pom.xml), e ser adicionada ao código.
 
 #### III.  Escolha  um  banco  de  dados  (menos  o  H2)  e  explique  como  utilizar  o  driver  de  comunicação.
 Basta adicionar a dependência do driver pom.xml e configurar o arquivo application.properties.
+
+
+## DESAFIO 12
+#### a) Explique o conceito de teste unitário?
+O teste unitário é uma forma de acompanhar cada parte do funcionamento da aplicação, essa forma de desenvolver o software é mais conhecida como TDD.
+Com o teste unitário tem sua vantagem e desvantagem:
+Vantagem:
+Segurança no código no que se espera.
+Trabalho em equipe torna ser mais objetivo. 
+Ajuda na gestão de grande projeto.
+Evita bugs.
+Desvantagem:
+Gasta mais hora no código. 
+Sem dúvida o teste unitário ajuda e muito no desenvolvimento de software.
+
+#### b) Descreva como fazer um código de teste.
+Para criar um teste precisa baixar a lib de preferência. 
+Basta ir à pasta teste do projeto.
+Adicionar uma classe de acordo com o ProjetoTeste e a anotação @RunWith(SpringRunner.class).
+Adicionar a função com nome amigável ao que será testado e sua anotação @Teste.
+E adicionar a dependência para a função caso seja especial com a anotação @InjectMocks para injetar e @Mock para simular algo esperado.
+Logo depois preparar os acertos com o Assert, rodar os testes e refatorar.
+
+#### c) Qual o intuito do teste unitário?
+O teste unitário traz segurança para toda aplicação, ou seja, evita uma série de problemas como bugs, baixa performance, falha na regra de negócio e muito mais.
+
+#### d)  Quais  são  as  ferramentas  que  utilizamos  para  realizar  testes  unitários(2  pelo  menos).
+JUnit e Mockito
+
+#### Desenvolva  o  teste  unitário  para  o  método  acima,  digitando  abaixo  todos  stack  traces de erros e explique em uma só frase qual o erro
+1 - trilha.back.financys.exceptions.NullPointerException: objeto nulo.
+2 - trilha.back.financys.exceptions.NotFoundException: objeto não encontrado.
+3 - org.opentest4j.AssertionFailedError, erro no teste esperado.
+4 - testes.TrilhaBackTestes.getLancamentosDependentesTeste: o caminho o erro na aplicação.

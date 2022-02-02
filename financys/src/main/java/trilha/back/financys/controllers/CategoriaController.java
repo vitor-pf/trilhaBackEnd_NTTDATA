@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.dtos.CategoriaRequestDTO;
 import trilha.back.financys.dtos.CategoriaResponseDTO;
-import trilha.back.financys.services.impl.CategoriaService;
+import trilha.back.financys.services.CategoriaInterface;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class CategoriaController {
     @Autowired
-    private CategoriaService categoriaService;
+    private CategoriaInterface categoriaService;
     @PostMapping("/save")
     public ResponseEntity<CategoriaResponseDTO> create(@RequestBody @Valid CategoriaRequestDTO body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.create(body));

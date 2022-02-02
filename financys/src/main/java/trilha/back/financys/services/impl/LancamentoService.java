@@ -10,6 +10,7 @@ import trilha.back.financys.dtos.LancamentoResponseDTO;
 import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.exceptions.DivideException;
 import trilha.back.financys.exceptions.NotFoundException;
+import trilha.back.financys.exceptions.NotFoundParamException;
 import trilha.back.financys.repositories.CategoriaRepository;
 import trilha.back.financys.repositories.LancamentoRepository;
 import trilha.back.financys.services.LancamentoInterface;
@@ -23,9 +24,9 @@ import java.util.NoSuchElementException;
 @Service
 public class LancamentoService implements LancamentoInterface {
     @Autowired
-    private LancamentoRepository lancamentoRepository;
+    LancamentoRepository lancamentoRepository;
     @Autowired
-    private CategoriaService categoriaService;
+    CategoriaService categoriaService;
     @Autowired
     CategoriaRepository categoriaRepository;
     @Autowired
@@ -111,6 +112,20 @@ public class LancamentoService implements LancamentoInterface {
         lancamentoEntity.setCategory(body.getCategory());
         return lancamentoEntity;
     }
+    public List<LancamentoEntity> getLancamentosDependentes(String date, String amount, boolean paid) {
+        if (date != null && amount != null) {
+            List<LancamentoEntity> result = lancamentoRepository
+                    .findAllByDateAndAmountAndPaid(date, Double.parseDouble(amount), paid);
+            if (!result.isEmpty())
+                return result;
+            throw new NotFoundParamException("Não existe os dados pelo parâmetro passado");
+        }
+        throw new NotFoundException("Parâmetros com valores errados");
+    }
+
+
+
+
     private LancamentoEntity toEntity(LancamentoRequestDTO dto) {
         return modelMapper.map(dto, LancamentoEntity.class);
     }
