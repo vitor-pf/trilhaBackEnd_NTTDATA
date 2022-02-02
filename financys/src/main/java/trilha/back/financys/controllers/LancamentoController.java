@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoRequestDTO;
 import trilha.back.financys.dtos.LancamentoResponseDTO;
-import trilha.back.financys.services.impl.LancamentoService;
+import trilha.back.financys.entities.LancamentoEntity;
+import trilha.back.financys.services.LancamentoInterface;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,11 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class LancamentoController {
     @Autowired
-    private LancamentoService lancamentoService;
-    @GetMapping("/grafico")
-    public ResponseEntity <List<ChartDTO>> grafico() {
-        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
-    }
+    private LancamentoInterface lancamentoService;
     @PostMapping("/save")
     public ResponseEntity<LancamentoResponseDTO> create(@RequestBody @Valid LancamentoRequestDTO body) {
         return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoService.create(body));
@@ -44,8 +41,22 @@ public class LancamentoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/grafico")
+    public ResponseEntity <List<ChartDTO>> grafico() {
+        return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.grafico());
+    }
     @GetMapping("/calcula/{x}/{y}")
     public ResponseEntity<Integer> calculaMedia(@PathVariable Integer x, @PathVariable Integer y){
         return ResponseEntity.status(HttpStatus.OK).body(lancamentoService.calculaMedia(x,y));
     }
+    @GetMapping("/filter")
+    public ResponseEntity<List<LancamentoEntity>> getLancamentosDependentes(
+            @RequestParam(value = "data_lancamento", required = false) String dataLancamento,
+            @RequestParam(value = "amount", required = false) String amount,
+            @RequestParam(value = "paid", required = false, defaultValue = "0") boolean paid
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                lancamentoService.getLancamentosDependentes(dataLancamento,amount,paid));
+    }
 }
+
