@@ -372,3 +372,19 @@ JUnit e Mockito
 2 - trilha.back.financys.exceptions.NotFoundException: objeto não encontrado.
 3 - org.opentest4j.AssertionFailedError, erro no teste esperado.
 4 - testes.TrilhaBackTestes.getLancamentosDependentesTeste: o caminho o erro na aplicação.
+
+
+## DESAFIO 13
+#### b)  Tire  evidências  das  telas  e  testes  mostrando  a  integração  dos  dois  códigos  e  adicione no README.md
+Tive que configurar o backEnd a acessar o frontEnd com algumas anotações e funções.
+Notei que é fundamental a comunicação do back com o front.
+@Configuration
+public class CorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:4200")
+                .allowedMethods("GET", "POST", "PUT", "DELETE");
+    }
+}
+

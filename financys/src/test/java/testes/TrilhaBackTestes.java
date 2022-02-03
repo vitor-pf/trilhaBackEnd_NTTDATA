@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.entities.LancamentoEntity;
+import trilha.back.financys.enums.Type;
 import trilha.back.financys.exceptions.NotFoundException;
 import trilha.back.financys.repositories.LancamentoRepository;
 import trilha.back.financys.services.impl.LancamentoService;
@@ -35,8 +36,8 @@ public class TrilhaBackTestes {
         Mockito.when(lancamentoRepository
                 .findAllByDateAndAmountAndPaid(date, Double.parseDouble(amount), paid))
                 .thenReturn(Collections.singletonList(new LancamentoEntity(1L, "name", "description12345",
-                        "REVENUE", Double.parseDouble(amount), date, paid, new CategoriaEntity())));
-
+                        Type.revenue.getType(), Double.parseDouble(amount), date, paid, new CategoriaEntity())));
+        //"REVENUE"
         List<LancamentoEntity> result = lancamentoService.
                 getLancamentosDependentes(date, amount, paid);
 

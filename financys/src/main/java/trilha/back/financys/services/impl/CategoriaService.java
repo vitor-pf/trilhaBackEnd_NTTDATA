@@ -23,7 +23,7 @@ public class CategoriaService implements CategoriaInterface {
 
     @Override
     public CategoriaResponseDTO create(CategoriaRequestDTO body){
-        isCategoryByName(body.getNameCategoria());
+        isCategoryByName(body.getName());
         return toResponseDTO(categoriaRepository.save(toEntity(body)));
     }
     @Override
@@ -60,14 +60,14 @@ public class CategoriaService implements CategoriaInterface {
 
 
     private void isCategoryByName(String name){
-        if(!categoriaRepository.findByNameCategoria(name).isEmpty())
+        if(!categoriaRepository.findByName(name).isEmpty())
             throw new NotFoundException("Já existe: "+ name);
     }
     private CategoriaEntity preUpdate(Long id, CategoriaRequestDTO body) {
         CategoriaEntity categoriaEntity = new CategoriaEntity();
         categoriaEntity.setId(id);
-        categoriaEntity.setNameCategoria(body.getNameCategoria());
-        categoriaEntity.setDescriptionCategoria(body.getDescriptionCategoria());
+        categoriaEntity.setName(body.getName());
+        categoriaEntity.setDescription(body.getDescription());
         return categoriaEntity;
     }
     private CategoriaEntity toEntity(CategoriaRequestDTO dto) {

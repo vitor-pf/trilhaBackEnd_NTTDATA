@@ -11,6 +11,7 @@ import trilha.back.financys.entities.CategoriaEntity;
 @NoArgsConstructor
 @Builder
 public class LancamentoResponseDTO {
+    private long id;
     private String name;
     private String description;
     private String type;

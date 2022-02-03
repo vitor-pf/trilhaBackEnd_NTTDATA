@@ -27,11 +27,11 @@ public class CategoriaEntity implements Serializable {
     @Column(name = "nameCategoria")
     @NotBlank(message = "O nome é obrigatório!")
     @Size(min = 3,max = 15,message = "O nome deve conter entre 3 a 15 caracteres!")
-    private String nameCategoria;
+    private String name;
     @Column(name = "descriptionCategoria")
     @NotBlank(message = "A descrição é obrigatório!")
     @Size(min = 15,max = 50,message = "A descrição deve conter entre 15 a 50 caracteres!")
-    private String descriptionCategoria;
+    private String description;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category")

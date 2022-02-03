@@ -1,8 +1,11 @@
 package trilha.back.financys.enums;
 
+import trilha.back.financys.exceptions.NotFoundParamException;
+
 public enum Type {
-    REVENUE("revenue"),
-    EXPENSE("expense");
+
+    revenue("revenue"), expense("expense");
+
     private String type;
 
     private Type(String type){
@@ -10,5 +13,13 @@ public enum Type {
     }
     public String getType(){
         return type;
+    }
+
+    public static Type valueOfType(String name){
+        for(Type value: Type.values()){
+            if(name == value.getType())
+                return value;
+        }
+        throw new NotFoundParamException("Tipo inválido");
     }
 }
