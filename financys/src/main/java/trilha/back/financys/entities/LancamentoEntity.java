@@ -31,10 +31,12 @@ public class LancamentoEntity implements Serializable {
     @NotBlank(message = "A descrição é obrigatória!")
     @Size(min = 3,max = 150,message = "A descrição deve conter entre 3 a 150 caracteres!")
     private String description;
+
     @Column(name = "type")
     @NotBlank(message = "O tipo é obrigatório!")
     @Size(min = 3,max = 10,message = "O tipo deve conter entre 3 a 10 caracteres!")
     private String type;
+
     @Column(name = "amount")
     @Min(value = 0L, message = "O valor não pode ser nulo e deve ser maior 0!")
     private Double amount;

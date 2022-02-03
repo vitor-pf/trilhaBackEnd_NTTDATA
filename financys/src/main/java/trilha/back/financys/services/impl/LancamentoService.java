@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import trilha.back.financys.dtos.ChartDTO;
 import trilha.back.financys.dtos.LancamentoRequestDTO;
 import trilha.back.financys.dtos.LancamentoResponseDTO;
+import trilha.back.financys.entities.CategoriaEntity;
 import trilha.back.financys.entities.LancamentoEntity;
 import trilha.back.financys.exceptions.DivideException;
 import trilha.back.financys.exceptions.NotFoundException;
@@ -18,6 +19,7 @@ import trilha.back.financys.services.LancamentoInterface;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 
@@ -33,7 +35,10 @@ public class LancamentoService implements LancamentoInterface {
     ModelMapper modelMapper;
     @Override
     public LancamentoResponseDTO create(LancamentoRequestDTO body) {
-        categoriaService.readById(body.getCategory().getId());
+        CategoriaEntity categoria = categoriaRepository.findByName(body.getCategoryName())
+                .orElseThrow(()-> new NotFoundException("Não existe a categoria: "+body.getCategoryName()));
+        body.setCategory(categoria);
+        
         return toResponseDTO(lancamentoRepository.save(toEntity(body)));
     }
     @Override
@@ -57,7 +62,9 @@ public class LancamentoService implements LancamentoInterface {
     public LancamentoResponseDTO update(Long id, LancamentoRequestDTO body) {
         try {
             readById(id);
-            categoriaService.readById(body.getCategory().getId());
+            CategoriaEntity categoria = categoriaRepository.findByName(body.getCategoryName()).get();
+            body.setCategory(categoria);
+            body.getType().getType().toUpperCase(Locale.ROOT);
             return toResponseDTO(lancamentoRepository.save(preUpdate(id, body)));
 
         }catch (EntityNotFoundException e){
@@ -82,7 +89,7 @@ public class LancamentoService implements LancamentoInterface {
                 .stream()
                 .forEach(categoriaEntity -> {
                     ChartDTO chartDTO = new ChartDTO();
-                    chartDTO.setName(categoriaEntity.getNameCategoria());
+                    chartDTO.setName(categoriaEntity.getName());
                     chartDTO.setTotal(0.0);
                     categoriaEntity.getLancamentoEntity().forEach(lan -> {
                         chartDTO.setTotal(lan.getAmount() + chartDTO.getTotal());

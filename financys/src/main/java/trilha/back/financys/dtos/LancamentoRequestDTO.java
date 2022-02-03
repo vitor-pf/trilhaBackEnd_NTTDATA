@@ -20,4 +20,6 @@ public class LancamentoRequestDTO {
     private String date;
     private boolean paid;
     private CategoriaEntity category;
+
+    private String categoryName;
 }
