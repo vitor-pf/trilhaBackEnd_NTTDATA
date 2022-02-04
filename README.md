@@ -389,5 +389,238 @@ public class CorsConfig implements WebMvcConfigurer {
     }
 }
 ~~~
--- ![image](https://user-images.githubusercontent.com/69551421/152529472-1ca82378-f0d7-4b1d-bf94-cb4aa4aa833e.png)
+FrontEnd-Lançamento
+![image](https://user-images.githubusercontent.com/69551421/152529472-1ca82378-f0d7-4b1d-bf94-cb4aa4aa833e.png)
+
+FrontEnd-Categoria
+![image](https://user-images.githubusercontent.com/69551421/152534969-037aa4e8-ddbe-42ca-a9a9-f841cca25cf2.png)
+
+BackEnd
+![image](https://user-images.githubusercontent.com/69551421/152535175-88101e8a-5eb2-475b-88f1-64bdc9948fe6.png)
+
+
+## DESAFIO 14
+#### a) Desafio 1 - Git:
+#### I. Dê 2 exemplos de situações onde é necessário utilizar merge:
+1 - É preciso mesclar os arquivos local com o remote.
+2 - É possível abortar o merge com --abort.
+
+#### II. Com qual objetivo realizamos o commit?III. Qual a diferença entre:     git add -all     git add  -u      git add -A     git add .
+git add -all, não reconhecido pelo git
+git add  -u, serve para atualizar logo após o git add(costumava usar no antigo git).
+git add -A, adiciona todos os arquivos em toda a árvore de trabalho serão atualizados.
+git add ., funciona igual o -A.
+
+#### I V.  Qual  é  a  ordem  dos  comandos  para  subir  novas  atualizações,  verificando  se existem alterações a serem recebidas?
+git status (verifica se tem novas atualizações)
+git add .
+git commit -m ""
+git push -u origin main
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 1? Se não, justifique;
+Sim, mas é tudo novo.
+
+#### b) Desafio 2 - POO e Entity:
+#### I. Qual é a finalidade da camada Entity?
+A camada entity mapea todo o banco de dados.
+
+#### II. Para você, por que acha que seguimos a programação orientada a objetos?
+Como tudo na vida é um objeto, ou seja, um molde para montar outras coisas.
+
+#### III. Qual é o ideal por trás de utilizar os métodos getters e setters?
+O setter e getter tem a ideia de proteger algo, ou seja, voçê tem o poder de disponibilizar o vai acessar o atributo.
+
+#### I V. Qual o propósito de um construtor em uma classe? Podemos criar uma classe sem construtor?
+Sim, podemos criar sem o construtor. O construtor inícia todo um ciclo, ou seja, uma instância do objeto a partir daquela classe e assim usa-lo.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 2? Se não, justifique;
+Sim.
+
+#### c) Desafio 3 - HTTP, REST e Controller:
+#### I. Qual é o objetivo da camada Controller?
+O nome já diz, é um controlador para o sistema, ou seja, a camada que conversa com o cliente.
+
+#### II. No que os padrões REST nos auxiliam?
+O padrão REST padronizar nossas API's, ou seja, nos permite boas práticas para o nosso projeto e assim tornando acessível para todos clientes.
+
+#### III. Quais métodos HTTP utilizamos para montar um CRUD?
+GET, POST, PUT, DELETE
+
+#### I V.    Qual    a    diferença    entre    as    annotations    @PathVariable, @RequestParam, @RequestBody?  E  com  quais  métodos  HTTP  elas  podem  ser  utilizadas respectivamente?
+@PathVariable, captura um caminha(.../users/{name}) na URL.
+@RequestParam, captura um parâmetro(.../usrs?id=1) na URL.
+@RequestBody, captura o corpo (body) na URL
+
+#### V. Para que serve ResponseEntity?
+O ResponseEntity serve para mostrar um feedback para aquela requisição, sendo é possível manipular o resultado.
+
+#### VI. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 3? Se não, justifique;
+Sim.
+
+#### d) Desafio 4 - JPA e Repository:
+#### I. Qual é o propósito da camada Repository?
+A camada Repository é importante para toda persistencia no banco de dados.
+
+#### II. De maneira prática como funciona a injeção do Repository? E qual a sua relação com @Autowired?
+Através da anotação @Repository o Spring passa a gerenciar o ciclo, mas o @Autowired injeta a instância daquele objeto na classe.
+Ou seja, como se fosse criado uma instância no construtor da classe.
+
+#### III. Quais são as facilidades em utilizar JPA?
+O JPA conta com uma serie de benefícios, isto é, métodos prontos e personalizaveis.
+
+#### I V. Quais são os passos para configurar um banco de dados em um projeto Spring?
+Baixa a lib . do Sprind Data SPA e Driver.
+Configurar o arquivo application.propertities
+Criar o repository.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 4? Se não, justifique;
+Sim.
+
+#### e) Desafio 5 - Service:
+#### I. Qual é a finalidade da camada Service?
+A camada Sevice recebe todas as regras lógicos, em termos praticos, é ele que fazer pequeno ou grande operações e até mesmo comunição APIs e repositórios.
+
+#### II. Qual o sentido de um método ter apenas um propósito?
+Responsábilidade única um dos princípios do SOLID, é possível criar um pequeno métodos apenas para uma finalidade.
+
+#### III. Qual a diferença entre um método void e métodos tipados?
+Método void não tem retorno.
+Método tipado é obrigado retornar o escrita do código... Classe, String, boolean
+
+#### I V. É normal um serviço chamar outro?
+Sim, é possível um serviço chamar outro para ter reaproveitamento de código.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 5? Se não, justifique;
+Sim, muito claro.
+
+#### f) Desafio 6 - DTO:
+#### I. Quais problemas conseguimos resolver utilizando a camada DTO?
+O DTO possibilitou uma maior segurança no sistema, sendo possível controlar a requisição e resposta.
+
+#### II.  Qual  a  diferença  de  realizarmos  o  “de  para”  utilizando  constructor  ou  getters  e  setters?
+O construtor acaba usandou uma única vez, já o getters e setters acaba sendo verboso pela quantidade de código.
+
+#### III. No que a utilização do Mapper nos auxilia? Achou fácil a implementação?
+O mapper ajudou a converte as entidades com seu método.
+
+#### I V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 6? Se não, justifique;
+Sim, os DTOs ficaram bem claro.
+
+#### g) Desafio 7 - Manipulação de dados:
+#### I. Qual é a forma de validar os dados de uma requisição sem utilizar @Valid?
+Usando o IF/ELSE e as funções prontas do java
+
+#### II. Para que serve um ENUM? Cite exemplos;
+O ENUM serve para controlar as constantes do sistema, ou seja, obrigamos aqueles enums no código.
+Const. StatusPedido: PENDENTE, PAGO, CANCELADO.
+Enum.  StatusPedido: PENDENTE(1), PAGO(2), CANCELADO(3).
+
+#### III. Como criamos um custom validator? E qual o objetivo de criar um?
+Basta baixar a lib.
+Adicionar as anotações nos atributos e métodos de acordo com a validação, e assim teremos um retorno de algo inesperado.
+
+#### I V. Qual foi a diferença entre utilizar for e streams no desafio 6?
+A diferença muito grande em questão de código e leitura.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 7? Se não, justifique;
+Não, fiquei confuso na questão do @Valid e Streams.
+
+#### h) Desafio 8 - Tratamento de exceptions:
+#### I. Qual a finalidade de trata-las?
+É importante tratar todos os erros do sistema para não trazer vulnerabilidade, e mostrar para o cliente uma resposta amigavél.
+
+#### II. Como as descobrimos?
+Através da Stack Trace.
+
+#### III. Como fazemos para estourar um exception em uma determinada linha?
+throw
+
+#### I V. Qual é a melhor forma de implementarmos nosso controle de exceções?
+ExceptionHandler
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 8? Se não, justifique;
+Sim.
+
+#### i) Desafio 9 - Patterns, SOLID e Arquitetura:
+#### I. O que é Singleton Pattern?
+É um padrão de projeto, e significa que apenas uma única classe será instânciada para toda a aplicação.
+
+#### II. O que significa a letra D de SOLID e como se aplica na camada de Repository?
+O D é Princípio da Inversão de Dependências, e se aplica em todo Spring Data.
+De modo, rápida e fácil, é possível mudar de banco de bando por não ter dependência aclopada.
+
+#### III. Qual o objetivo das camadas?
+Distribuir as responsabilidades.
+
+#### I V. Qual arquitetura é melhor DDD, Hexagonal ou Clean?
+Não existe a melhor arquitetura e sim para aquela aplicação.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 9? Se não, justifique;
+Não, a questão do SOLID e Arquitetura.
+
+#### j) Desafio 10 - Spring:
+#### I. Qual a diferença entre Java e Spring?
+Java é uma liguaguem de programação OO.
+Spring é o framework do Java com diversas funcionalidades para o desenvolvimento.
+
+#### II. É possível utilizar Spring Data sozinho?
+Não, precisa do Spring.
+
+#### III. É possível utilizar Spring Boot, Spring Data e Spring Security em apenas um projeto? Se sim, como é feito a integração?
+Basta baixar as libs. Spring Boot, Spring Data e Spring Security.
+Criar e configurar o arquivo application.propertities
+Criar e confifurar a classe SecurityConfig e adicionar suas anotações.
+E criar apalicação.
+
+#### I V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 10? Se não, justifique;
+Não, os desafios não apresentou Spring Security, mas cheguei a estudar.
+
+#### k) Desafio 11 - Libs:
+#### I. Cite 5 libs que utilizou durante a trilha e suas respectivas funcionalidades;
+1 - Jackson
+2 - Lombok
+3 - Mapper
+4 - JUnit
+5 - Mockito
+
+#### II. Qual a diferença entre uma lib e um driver?
+O Spring Data é uma lib que contém diversos drivers do java puros.
+
+#### III. Existe limite de libs por projeto?
+Não, mas é melhor mínimo possível para performace.
+
+### I V. Por que utilizar um gerenciador de dependências?
+Para gerenciar todas as libs do sistema, sendo que a dependencia pode ter a mesma.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 11? Se não, justifique;
+Sim.
+
+#### l) Desafio 12 - Testes unitários:
+#### I. Por que DEVOPS exige uma porcentagem de cobertura mínima nos projetos?
+Para que essa cobertura seja acompanhavel.
+
+#### II. Qual o objetivo de utilizar Mockito? Dê um exemplo;
+O seu principal objetivo é instanciar classes e controlar o comportamento dos métodos.
+Temos a classe Pedido com método finalizar compra e seu retorno é gerar um código
+Pedido.finalizar() -> esperado -> Pedido.finalizar("123456789")
+
+#### III. O que é o Sonar? E qual é o seu papel?
+O sonar é um projeto open source, ele avalia a qualidade do seu código e realiza diversas análises durante o processo de compilação.
+
+#### I V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 12? Se não, justifique;
+Sim.
+
+#### m) Desafio 13 - Integração:
+#### I. Como foi o processo de integração?
+Trabalhoso por não ter o conhecimento, mas procurei as informações para poder integrar.
+
+#### II. Quais foram as principais dificuldades?
+Achar os bugs e as informações.
+
+#### III. Obteve algum erro de CORS?I V. O que é CORS?
+Sim, o Front-End estava sem acesso ao Back-End.
+O CORS é um mecanismo que usa cabeçalho adicional HTTP para informar ao navegador que fará acesso no local de origem para outros servidores aonde possui acesso, ou seja, o sistema vai se comunicar com outras APIs.
+
+#### V. Você conseguiu adquirir os conhecimentos transmitidos durante o desafio 13? Se não, justifique;
+Sim.
 
