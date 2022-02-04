@@ -378,6 +378,7 @@ JUnit e Mockito
 #### b)  Tire  evidências  das  telas  e  testes  mostrando  a  integração  dos  dois  códigos  e  adicione no README.md
 Tive que configurar o backEnd a acessar o frontEnd com algumas anotações e funções.
 Notei que é fundamental a comunicação do back com o front.
+~~~Java
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override
@@ -387,4 +388,6 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 }
+~~~
+-- ![image](https://user-images.githubusercontent.com/69551421/152529472-1ca82378-f0d7-4b1d-bf94-cb4aa4aa833e.png)
 
